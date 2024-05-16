@@ -33,21 +33,17 @@
 #include "mcc_generated_files/system/system.h"
 #include "ePaper.h"
 #include "mcc_generated_files/timer/delay.h"
+#include "usb_cdc_virtual_serial_port.h"
 
-/*
-    Main application
-*/
+#include <stdint.h>
+#include <stdbool.h>
 
 int main(void)
 {
     SYSTEM_Initialize();
-    
     SPI0_Host_Open(HOST_CONFIG);
     
     EPAPER_Initialize();
-    
-    EPAPER_LoadTestPattern();
-    EPAPER_UpdateDisplay();
     
 //    EPAPER_ClearDisplayBuffer(RED);
 //    EPAPER_UpdateDisplay();
@@ -56,11 +52,91 @@ int main(void)
 //    DELAY_milliseconds(1000);
 //    
 //    EPAPER_ClearDisplayBuffer(BLACK);
-//    EPAPER_UpdateDisplay();
+    EPAPER_LoadTestPattern();
+    EPAPER_UpdateDisplay();
     
     sei();
     
+    USB_Start();
+    
+    uint8_t pixel = 0x00;
+    
+    uint16_t indexX = 0, indexY = PANEL_PIXEL_Y - 1;
+    
     while(1)
     {
+        USB_CDCVirtualSerialPortHandler();
+        USBDevice_Handle();
+        
+        //Handle any pixels
+        while (USB_CDCRead(&pixel) == CDC_SUCCESS)
+        {
+            //Pixels are sent left -> right
+            //But, display is rotated, so X<->Y
+            if (pixel == 'R')
+            {
+                EPAPER_SetPixel(indexX, indexY, RED);
+            }
+            else if (pixel == 'W')
+            {
+                EPAPER_SetPixel(indexX, indexY, WHITE);
+            }
+            else if (pixel == 'B')
+            {
+                EPAPER_SetPixel(indexX, indexY, BLACK);
+            }
+            else if (pixel == '#')
+            {
+                EPAPER_UpdateDisplay();
+                indexX = 0;
+                indexY = 0;
+                continue;
+            }
+            else if (pixel == ' ')
+            {
+                indexX = 0;
+                indexY = PANEL_PIXEL_Y - 1;
+                continue;
+            }
+            else
+            {
+                continue;
+            }
+            
+            if (pixel != '#')
+            {
+                //RBW Value
+//                if (indexX == PANEL_PIXEL_X)
+//                {
+//                    indexX = 0;
+//                    if (indexY != PANEL_PIXEL_Y)
+//                    {
+//                        indexY++;
+//                    }
+//                }
+//                else
+//                {
+//                    indexX++;
+//                }
+                
+                if (indexY == 0)
+                {
+                    indexY = PANEL_PIXEL_Y - 1;
+                    if (indexX != PANEL_PIXEL_X)
+                    {
+                        indexX++;
+                    }
+                }
+                else
+                {
+                    indexY--;
+                }
+
+                
+                
+            }
+            
+        }
+        
     }    
 }

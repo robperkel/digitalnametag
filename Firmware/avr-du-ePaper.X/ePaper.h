@@ -12,13 +12,13 @@ extern "C" {
 //Other displays may be compatiable
 //https://www.pervasivedisplays.com/product/2-13-e-ink-displays/
     
-#define PANEL_PIXEL_X 104
-#define PANEL_PIXEL_Y 212
+#define PANEL_PIXEL_X 152UL
+#define PANEL_PIXEL_Y 296UL
     
 #define PANEL_COLUMNS (PANEL_PIXEL_X >> 3)
 #define PANEL_ROWS PANEL_PIXEL_Y
     
-    typedef uint8_t pixel_pointer_t[PANEL_ROWS][PANEL_COLUMNS];
+    typedef uint8_t pixel_array_t[PANEL_ROWS][PANEL_COLUMNS];
     
     typedef enum {
         WHITE = 0, BLACK, RED
@@ -31,10 +31,13 @@ extern "C" {
     void EPAPER_AddressRegister(uint8_t reg);
     
     //Returns a pointer to the pixel array for BW
-    pixel_pointer_t* EPAPER_GetPixelPointerBW(void);
+    pixel_array_t* EPAPER_GetPixelPointerBW(void);
     
     //Returns a pointer to the pixel array for R
-    pixel_pointer_t* EPAPER_GetPixelPointerR(void);
+    pixel_array_t* EPAPER_GetPixelPointerR(void);
+    
+    //Sets a pixel to the specified color
+    void EPAPER_SetPixel(uint16_t x, uint16_t y, color_t color);
     
     //Clears the display
     void EPAPER_ClearDisplayBuffer(color_t fill);

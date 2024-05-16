@@ -236,7 +236,8 @@
   },
   "libraries": {
     "pinned_footprint_libs": [
-      "Microchip"
+      "Microchip",
+      "nametag"
     ],
     "pinned_symbol_libs": [
       "Nametag Sch Library"

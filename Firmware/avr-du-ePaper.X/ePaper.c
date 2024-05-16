@@ -8,7 +8,7 @@
 
 //Display Buffer
 static uint8_t BW_Pixels[PANEL_ROWS][PANEL_COLUMNS];
-static uint8_t R_Pixels[PANEL_ROWS][PANEL_COLUMNS];
+//static uint8_t R_Pixels[PANEL_ROWS][PANEL_COLUMNS];
 
 //Configure the display
 void EPAPER_Initialize(void)
@@ -70,17 +70,45 @@ void EPAPER_AddressRegister(uint8_t reg)
 }
 
 //Returns a pointer to the pixel array for BW
-pixel_pointer_t* EPAPER_GetPixelPointerBW(void)
+pixel_array_t* EPAPER_GetPixelPointerBW(void)
 {
-    pixel_pointer_t* ptr = &BW_Pixels;
+    pixel_array_t* ptr = &BW_Pixels;
     return ptr;
 }
 
 //Returns a pointer to the pixel array for R
-pixel_pointer_t* EPAPER_GetPixelPointerR(void)
+pixel_array_t* EPAPER_GetPixelPointerR(void)
 {
-    pixel_pointer_t* ptr = &R_Pixels;
-    return ptr;
+//    pixel_array_t* ptr = &R_Pixels;
+    return &BW_Pixels;
+}
+
+//Sets a pixel to the specified color
+void EPAPER_SetPixel(uint16_t x, uint16_t y, color_t color)
+{
+    //Find the byte
+    uint8_t bIndex = x >> 3;
+    uint8_t mask = 0b1 << (7 - (x & 0b111));
+    
+    if (color == WHITE)
+    {
+        //White
+        //Bits should be cleared
+        BW_Pixels[y][bIndex] &= ~mask;
+//        R_Pixels[y][bIndex] &= ~mask;
+    }
+    else if (color == BLACK)
+    {
+        //Black
+        BW_Pixels[y][bIndex] |= mask;
+//        R_Pixels[y][bIndex] &= ~mask;
+    }
+    else
+    {
+        //Red
+        BW_Pixels[y][bIndex] &= ~mask;
+//        R_Pixels[y][bIndex] |= mask;
+    }
 }
 
 //Fill the display with a color
@@ -97,12 +125,12 @@ void EPAPER_ClearDisplayBuffer(color_t fill)
         rColor = 0xFF;
     }
     
-    for (uint8_t y = 0; y < PANEL_ROWS; y++)
+    for (uint16_t y = 0; y < PANEL_ROWS; y++)
     {
-        for (uint8_t x = 0; x < PANEL_COLUMNS; x++)
+        for (uint16_t x = 0; x < PANEL_COLUMNS; x++)
         {
             BW_Pixels[y][x] = bwColor;
-            R_Pixels[y][x] = rColor;
+//            R_Pixels[y][x] = rColor;
         }
     }
 
@@ -115,7 +143,7 @@ void EPAPER_LoadTestPattern(void)
     uint8_t bwColor = 0x00, rColor = 0x00;
     color_t nextColor = WHITE;
     
-    for (uint8_t y = 0; y < PANEL_ROWS; y++)
+    for (uint16_t y = 0; y < PANEL_ROWS; y++)
     {
         if ((y & 0x07) == 0)
         {
@@ -145,10 +173,10 @@ void EPAPER_LoadTestPattern(void)
             }
         }
         
-        for (uint8_t x = 0; x < PANEL_COLUMNS; x++)
+        for (uint16_t x = 0; x < PANEL_COLUMNS; x++)
         {
             BW_Pixels[y][x] = bwColor;
-            R_Pixels[y][x] = rColor;
+//            R_Pixels[y][x] = rColor;
         }
     }
 }
@@ -251,9 +279,9 @@ void EPAPER_UpdateDisplay(void)
     EPAPER_AddressRegister(0x10);
     DC_SetHigh();
 
-    for (uint8_t y = 0; y < PANEL_ROWS; y++)
+    for (uint16_t y = 0; y < PANEL_ROWS; y++)
     {
-        for (uint8_t x = 0; x < PANEL_COLUMNS; x++)
+        for (uint16_t x = 0; x < PANEL_COLUMNS; x++)
         {
             DISP_CS_SetLow();
             SPI0_ByteExchange(BW_Pixels[y][x]);
@@ -266,12 +294,13 @@ void EPAPER_UpdateDisplay(void)
     EPAPER_AddressRegister(0x13);
     DC_SetHigh();
 
-    for (uint8_t y = 0; y < PANEL_ROWS; y++)
+    for (uint16_t y = 0; y < PANEL_ROWS; y++)
     {
-        for (uint8_t x = 0; x < PANEL_COLUMNS; x++)
+        for (uint16_t x = 0; x < PANEL_COLUMNS; x++)
         {
             DISP_CS_SetLow();
-            SPI0_ByteExchange(R_Pixels[y][x]);
+            SPI0_ByteExchange(0xF0);
+//            SPI0_ByteExchange(R_Pixels[y][x]);
             DISP_CS_SetHigh();
         }
     }
