@@ -106,7 +106,7 @@
 					)
 				)
 			)
-			(pin no_connect line
+			(pin input line
 				(at -7.62 -1.27 0)
 				(length 2.54)
 				(name "NC"
