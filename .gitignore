@@ -2,3 +2,6 @@
 /PCB/nametag/nametag-backups
 /Firmware/avr-du-ePaper.X/build
 /Firmware/avr-du-ePaper.X/.generated_files
+/EPaper Loader/EPaper Loader/bin
+/EPaper Loader/EPaper Loader/obj
+/EPaper Loader/.vs
