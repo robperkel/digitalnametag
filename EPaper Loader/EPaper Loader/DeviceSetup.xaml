@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EPaper_Loader.MainPage"
+             Unloaded="ContentPage_Unloaded">
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="10,10"
+            Spacing="25">
+            <Label
+                Text="Device Communication"
+                FontSize="Medium" />
+            
+                <Picker Title="COM Port" IsEnabled="True" 
+                        HorizontalOptions="FillAndExpand"
+                        x:Name="COMList">
+                    <Picker.Items>
+                    </Picker.Items>
+                </Picker>
+            <Grid>
+                <Label x:Name="ErrorLabel"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Unknown Error"
+                    HorizontalOptions="Start"
+                    IsVisible="True"
+                    TextColor="Red"
+                    FontAttributes="Bold"
+                />
+                <Button x:Name="RefreshBtn"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="Refresh" 
+                        HorizontalOptions="EndAndExpand"
+                        Pressed="RefreshBtn_Pressed"
+                        BackgroundColor="CornflowerBlue"
+                        />
+            </Grid>
+            <Button
+                x:Name="ConnectBtn"
+                Text="Press to open COM port" 
+                HorizontalOptions="Fill" 
+                Pressed="ConnectBtn_Pressed"/>
+
+            <Label
+                Text="Display Configuration"
+                FontSize="Medium" />
+
+            <HorizontalStackLayout>
+                <Picker>
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>248 x 128 (2.06 in)</x:String>
+                            <x:String>212 x 104 (2.13 in)</x:String>
+                            <x:String>296 x 152 (2.66 in)</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                    <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                </Picker>
+                <Picker>
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>2 Color (B/W)</x:String>
+                            <x:String>3 Color (B/W/R)</x:String>
+                            <x:String>4 Color (B/W/R/Y)</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                    <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                </Picker>
+
+            </HorizontalStackLayout>
+            
+            <TableView Intent="Data" 
+                   x:Name="InfoTable" Margin="0,0,0,0"
+                   >
+                <TableRoot>
+                    <TableSection>
+                        <TextCell Text="Firmware Version" Detail="Unknown" x:Name="FirmwareText"></TextCell>
+                        <TextCell Text="Build Date" Detail="Unknown" x:Name="BuildText"></TextCell>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

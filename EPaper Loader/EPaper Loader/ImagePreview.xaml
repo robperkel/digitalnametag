@@ -4,23 +4,24 @@
              x:Class="EPaper_Loader.ImagePreview"
              Title="Load Image"
              NavigatedTo="ContentPage_NavigatedTo">
-    <VerticalStackLayout>
-        <Label
-            Text="System Configuration"
-            Margin="0,0,0,0"
-            Padding="0,0,0,0"
-            />
-        <TableView Intent="Data"  IsVisible="False" 
-                   x:Name="InfoTable" Margin="0,0,0,0"
+    <VerticalStackLayout Margin="10">
+        <Image BackgroundColor="White"
+               IsVisible="Collapse"
+               x:Name="PreviewImage">
+        </Image>
+        <Button Text="Open Image" x:Name="OpenButton" Clicked="OpenButton_Clicked">
+        </Button>
+        <TableView Intent="Data" 
+                   x:Name="ImageTable" Margin="0,0,0,0"
+                   IsVisible="False"
                    >
             <TableRoot>
-                <TableSection Title="System Configuration">
-                    <TextCell Text="Display Resolution" Detail="Unknown" x:Name="ResolutionText"></TextCell>
-                    <TextCell Text="Display Colors" Detail="Unknown" x:Name="ColorModeText"></TextCell>
-                    <TextCell Text="Firmware Version" Detail="Unknown" x:Name="FirmwareText"></TextCell>
-                    <TextCell Text="Build Date" Detail="Unknown" x:Name="BuildText"></TextCell>
+                <TableSection>
+                    <TextCell Text="Image Size" Detail="Unknown" x:Name="ImageSizeText"></TextCell>
+                    <TextCell Text="Detected Colors" Detail="Unknown" x:Name="ColorText"></TextCell>
                 </TableSection>
             </TableRoot>
         </TableView>
+
     </VerticalStackLayout>
 </ContentPage>

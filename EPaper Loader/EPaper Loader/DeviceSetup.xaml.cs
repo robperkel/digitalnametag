@@ -45,9 +45,9 @@ namespace EPaper_Loader
                 return;
             }
 
-            AppShell.Shell_assignPortName(COMList.Items[COMList.SelectedIndex]);
+            AppShell.AssignPortName(COMList.Items[COMList.SelectedIndex]);
 
-            if (!AppShell.Shell_openPort())
+            if (!AppShell.OpenPort())
             {
                 //Unable to open COM Port
 
@@ -55,6 +55,8 @@ namespace EPaper_Loader
                 ErrorLabel.IsVisible = true;
                 return;
             }
+
+            //TODO: Communicate with panel!
 
             ErrorLabel.IsVisible = false;
 

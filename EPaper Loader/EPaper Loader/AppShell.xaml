@@ -9,11 +9,11 @@
     Disappearing="Shell_Disappearing"
     >
     <TabBar>
-        <Tab Title="Serial Interface">
+        <Tab Title="Device Setup">
             <ShellContent
-        Title="COM Port Configuration"
+        Title="Device Setup"
         ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Route="DeviceSetup" />
         </Tab>
         <Tab Title="Load Image">
             <ShellContent
