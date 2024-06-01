@@ -60,7 +60,10 @@ namespace EPaper_Loader
 
             ErrorLabel.IsVisible = false;
 
-            Shell.Current.GoToAsync("//ImagePreview");
+            DisplayLabel.IsVisible = true;
+            DisplaySettings.IsVisible = true;
+            InfoTable.IsVisible = true;
+            //Shell.Current.GoToAsync("//ImagePreview");
         }
 
         private void ContentPage_Unloaded(object sender, EventArgs e)

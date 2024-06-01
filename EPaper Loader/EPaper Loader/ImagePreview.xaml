@@ -18,7 +18,7 @@
             <TableRoot>
                 <TableSection>
                     <TextCell Text="Image Size" Detail="Unknown" x:Name="ImageSizeText"></TextCell>
-                    <TextCell Text="Detected Colors" Detail="Unknown" x:Name="ColorText"></TextCell>
+                    <TextCell Text="Display Mode Required" Detail="Unknown" x:Name="ColorText"></TextCell>
                 </TableSection>
             </TableRoot>
         </TableView>

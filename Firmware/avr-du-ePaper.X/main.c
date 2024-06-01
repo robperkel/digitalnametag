@@ -34,16 +34,38 @@
 #include "ePaper.h"
 #include "mcc_generated_files/timer/delay.h"
 #include "usb_cdc_virtual_serial_port.h"
+#include "ringBuffer.h"
+#include "pixelManager.h"
+#include "Application.h"
 
 #include <stdint.h>
 #include <stdbool.h>
+
+#define TX_BUFFER_SIZE 32
 
 int main(void)
 {
     SYSTEM_Initialize();
     SPI0_Host_Open(HOST_CONFIG);
+
+    Application_Initialize();
+    PixelManager_Initialize();
     
+    //Enumerate USB
+    if (USB_Start() == SUCCESS)
+    {
+        LED_USB_SetHigh();
+    }
+    
+    //Boot the Display
     EPAPER_Initialize();
+    
+    //Ring Buffer
+    char txCharBuffer[TX_BUFFER_SIZE];
+    RingBuffer txBuffer;
+    
+    //Create the buffer
+    ringBuffer_createBuffer(&txBuffer, txCharBuffer, TX_BUFFER_SIZE);
     
 //    EPAPER_ClearDisplayBuffer(RED);
 //    EPAPER_UpdateDisplay();
@@ -52,90 +74,52 @@ int main(void)
 //    DELAY_milliseconds(1000);
 //    
 //    EPAPER_ClearDisplayBuffer(BLACK);
-    EPAPER_LoadTestPattern();
-    EPAPER_UpdateDisplay();
+//    EPAPER_LoadTestPattern();
+//    EPAPER_UpdateDisplay();
     
     sei();
     
-    USB_Start();
+    uint8_t data = 0x00;
     
-    uint8_t pixel = 0x00;
-    
-    uint16_t indexX = 0, indexY = PANEL_PIXEL_Y - 1;
+//    uint16_t indexX = 0, indexY = PANEL_PIXEL_Y - 1;
     
     while(1)
     {
         USB_CDCVirtualSerialPortHandler();
         USBDevice_Handle();
         
-        //Handle any pixels
-        while (USB_CDCRead(&pixel) == CDC_SUCCESS)
+        //Handle any input
+        while (USB_CDCRead(&data) == CDC_SUCCESS)
         {
-            //Pixels are sent left -> right
-            //But, display is rotated, so X<->Y
-            if (pixel == 'R')
+//            Application_LoadData(data);
+            if (data == 'R')
             {
-                EPAPER_SetPixel(indexX, indexY, RED);
+                PixelManager_LoadImage(RED);
             }
-            else if (pixel == 'W')
+            else if (data == 'W')
             {
-                EPAPER_SetPixel(indexX, indexY, WHITE);
+                PixelManager_LoadImage(WHITE);
             }
-            else if (pixel == 'B')
+            else if (data == 'B')
             {
-                EPAPER_SetPixel(indexX, indexY, BLACK);
+                PixelManager_LoadImage(BLACK);
             }
-            else if (pixel == '#')
+            else if (data == '#')
             {
+                LED_DISP_SetHigh();
                 EPAPER_UpdateDisplay();
-                indexX = 0;
-                indexY = 0;
+                LED_DISP_SetLow();
                 continue;
             }
-            else if (pixel == ' ')
+            else if (data == ' ')
             {
-                indexX = 0;
-                indexY = PANEL_PIXEL_Y - 1;
+                PixelManager_ResetSeqPixelPointers();
                 continue;
             }
             else
             {
                 continue;
-            }
-            
-            if (pixel != '#')
-            {
-                //RBW Value
-//                if (indexX == PANEL_PIXEL_X)
-//                {
-//                    indexX = 0;
-//                    if (indexY != PANEL_PIXEL_Y)
-//                    {
-//                        indexY++;
-//                    }
-//                }
-//                else
-//                {
-//                    indexX++;
-//                }
-                
-                if (indexY == 0)
-                {
-                    indexY = PANEL_PIXEL_Y - 1;
-                    if (indexX != PANEL_PIXEL_X)
-                    {
-                        indexX++;
-                    }
-                }
-                else
-                {
-                    indexY--;
-                }
-
-                
-                
-            }
-            
+            }            
         }
         
     }    

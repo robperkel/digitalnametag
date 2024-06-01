@@ -23,7 +23,7 @@
                     Grid.Column="0"
                     Text="Unknown Error"
                     HorizontalOptions="Start"
-                    IsVisible="True"
+                    IsVisible="Hidden"
                     TextColor="Red"
                     FontAttributes="Bold"
                 />
@@ -43,10 +43,14 @@
                 Pressed="ConnectBtn_Pressed"/>
 
             <Label
+                x:Name="DisplayLabel"
                 Text="Display Configuration"
+                IsVisible="Hidden"
                 FontSize="Medium" />
 
-            <HorizontalStackLayout>
+            <HorizontalStackLayout 
+                x:Name="DisplaySettings"
+                IsVisible="Hidden">
                 <Picker>
                     <Picker.ItemsSource>
                         <x:Array Type="{x:Type x:String}">
@@ -67,11 +71,13 @@
                     </Picker.ItemsSource>
                     <Picker.SelectedIndex>0</Picker.SelectedIndex>
                 </Picker>
-
+                <Button Text="Apply">
+                </Button>
             </HorizontalStackLayout>
             
             <TableView Intent="Data" 
                    x:Name="InfoTable" Margin="0,0,0,0"
+                   IsVisible="Hidden"
                    >
                 <TableRoot>
                     <TableSection>
