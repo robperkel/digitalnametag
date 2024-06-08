@@ -14,12 +14,6 @@ extern "C" {
 //Other displays may be compatiable
 //https://www.pervasivedisplays.com/product/2-13-e-ink-displays/
     
-//#define PANEL_PIXEL_X 104UL
-//#define PANEL_PIXEL_Y 212UL
-//    
-//#define PANEL_COLUMNS (PANEL_PIXEL_X >> 3)
-//#define PANEL_ROWS PANEL_PIXEL_Y
-    
     //Configure the display
     void EPAPER_Initialize(void);
     

@@ -11,7 +11,7 @@ extern "C" {
     void Application_Initialize(void);
     
     //Add data to the queue
-    void Application_LoadData(char c);
+    void Application_AcceptData(char c);
     
     //Handle any received input data
     void Application_HandleUSBInput(void);

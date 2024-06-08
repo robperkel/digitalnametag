@@ -37,6 +37,7 @@
 #include "ringBuffer.h"
 #include "pixelManager.h"
 #include "Application.h"
+#include "textQueue.h"
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -48,6 +49,7 @@ int main(void)
     SYSTEM_Initialize();
     SPI0_Host_Open(HOST_CONFIG);
 
+    TextQueue_Initialize();
     Application_Initialize();
     PixelManager_Initialize();
     
@@ -58,27 +60,7 @@ int main(void)
     {
         LED_USB_SetHigh();
     }
-    
-    //Boot the Display
-    EPAPER_Initialize();
-    
-    //Ring Buffer
-    char txCharBuffer[TX_BUFFER_SIZE];
-    RingBuffer txBuffer;
-    
-    //Create the buffer
-    ringBuffer_createBuffer(&txBuffer, txCharBuffer, TX_BUFFER_SIZE);
-    
-//    EPAPER_ClearDisplayBuffer(RED);
-//    EPAPER_UpdateDisplay();
-//    
-//    DELAY_milliseconds(1000);
-//    DELAY_milliseconds(1000);
-//    
-//    EPAPER_ClearDisplayBuffer(BLACK);
-//    EPAPER_LoadTestPattern();
-//    EPAPER_UpdateDisplay();
-    
+        
     sei();
         
     uint8_t data = 0x00;
@@ -88,33 +70,17 @@ int main(void)
         USB_CDCVirtualSerialPortHandler();
         USBDevice_Handle();
         
-        //Handle any input
+        //Handle any input data
         while (USB_CDCRead(&data) == CDC_SUCCESS)
         {
-//            Application_LoadData(data);
-            if (data == 'R')
-            {
-                PixelManager_LoadPixelStream(RED);
-            }
-            else if (data == 'W')
-            {
-                PixelManager_LoadPixelStream(WHITE);
-            }
-            else if (data == 'B')
-            {
-                PixelManager_LoadPixelStream(BLACK);
-            }
-            else if (data == '#')
-            {
-                LED_DISP_SetHigh();
-                EPAPER_UpdateDisplay();
-                LED_DISP_SetLow();
-            }
-            else if (data == ' ')
-            {
-                PixelManager_ResetSeqPixelPointers();
-            }
+            Application_AcceptData(data);
         }
+        
+        //Process data
+        Application_HandleUSBInput();
+        
+        //Send Queued Text
+        TextQueue_LoadUSB();
         
     }    
 }

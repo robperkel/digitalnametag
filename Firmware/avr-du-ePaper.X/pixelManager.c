@@ -121,6 +121,17 @@ void PixelManager_ResetSeqPixelPointers(void)
 //Loads data into buffer
 void PixelManager_LoadPixelStream(color_t clr)
 {
+    if ((clr == YELLOW) && (colorMode != BWRY))
+    {
+        //Not supported on current panel - convert to White
+        clr = WHITE;
+    }
+    else if ((clr == RED) && (colorMode == BW))
+    {
+        //Not supported on current panel - convert to Black
+        clr = BLACK;
+    }
+    
     PixelManager_SetPixel(indexX, indexY, clr);
     
     //Update image direction data
