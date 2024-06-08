@@ -7,6 +7,9 @@
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
                      projectFiles="true">
+        <logicalFolder name="adc" displayName="adc" projectFiles="true">
+          <itemPath>mcc_generated_files/adc/adc0.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="spi" displayName="spi" projectFiles="true">
           <itemPath>mcc_generated_files/spi/spi0.h</itemPath>
           <itemPath>mcc_generated_files/spi/spi_interface.h</itemPath>
@@ -96,6 +99,11 @@
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
                      projectFiles="true">
+        <logicalFolder name="adc" displayName="adc" projectFiles="true">
+          <logicalFolder name="src" displayName="src" projectFiles="true">
+            <itemPath>mcc_generated_files/adc/src/adc0.c</itemPath>
+          </logicalFolder>
+        </logicalFolder>
         <logicalFolder name="spi" displayName="spi" projectFiles="true">
           <logicalFolder name="src" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/spi/src/spi0.c</itemPath>
@@ -205,7 +213,7 @@
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
       <AtmelIceTool>
-        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="debugoptions.useswbreakpoints" value="true"/>
       </AtmelIceTool>
       <HI-TECH-COMP>
         <property key="additional-warnings" value="true"/>

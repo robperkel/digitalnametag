@@ -51,17 +51,17 @@ namespace EPaper_Loader
                         if (pixel == white)
                         {
                             //White
-                            stream[x, y] = 'w';
+                            stream[x, y] = 'W';
                         }
                         else if (pixel == black)
                         {
                             //Black
-                            stream[x, y] = 'b';
+                            stream[x, y] = 'B';
                         }
                         else if (pixel == red)
                         {
                             //Red
-                            stream[x, y] = 'r';
+                            stream[x, y] = 'R';
                             if (colors != 4)
                             {
                                 colors = 3;
@@ -70,7 +70,7 @@ namespace EPaper_Loader
                         else if (pixel == yellow)
                         {
                             //Yellow
-                            stream[x, y] = 'y';
+                            stream[x, y] = 'Y';
                             colors = 4;
                         }
                         else

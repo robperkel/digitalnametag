@@ -51,6 +51,8 @@ int main(void)
     Application_Initialize();
     PixelManager_Initialize();
     
+    USB_Stop();
+    
     //Enumerate USB
     if (USB_Start() == SUCCESS)
     {
@@ -78,11 +80,9 @@ int main(void)
 //    EPAPER_UpdateDisplay();
     
     sei();
-    
+        
     uint8_t data = 0x00;
-    
-//    uint16_t indexX = 0, indexY = PANEL_PIXEL_Y - 1;
-    
+        
     while(1)
     {
         USB_CDCVirtualSerialPortHandler();
@@ -94,32 +94,26 @@ int main(void)
 //            Application_LoadData(data);
             if (data == 'R')
             {
-                PixelManager_LoadImage(RED);
+                PixelManager_LoadPixelStream(RED);
             }
             else if (data == 'W')
             {
-                PixelManager_LoadImage(WHITE);
+                PixelManager_LoadPixelStream(WHITE);
             }
             else if (data == 'B')
             {
-                PixelManager_LoadImage(BLACK);
+                PixelManager_LoadPixelStream(BLACK);
             }
             else if (data == '#')
             {
                 LED_DISP_SetHigh();
                 EPAPER_UpdateDisplay();
                 LED_DISP_SetLow();
-                continue;
             }
             else if (data == ' ')
             {
                 PixelManager_ResetSeqPixelPointers();
-                continue;
             }
-            else
-            {
-                continue;
-            }            
         }
         
     }    

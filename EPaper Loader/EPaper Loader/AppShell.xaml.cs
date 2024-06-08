@@ -90,6 +90,28 @@ namespace EPaper_Loader
             return "???";
         }
 
+        static public void SendToEPaper()
+        {
+            if (port == null)
+            {
+                return;
+            }
+
+            if (port.IsOpen)
+            {
+                port.Write(" ");
+                for (int y = 0; y < imageConverter.getHeight(); y++)
+                {
+                    for (int x = 0; x < imageConverter.getWidth(); x++)
+                    {
+                        char c = imageConverter.getPixel(x, y);
+                        port.Write(imageConverter.getPixel(x, y).ToString());
+                    }
+                }
+                port.Write("#");
+            }
+        }
+
         private void Shell_Disappearing(object sender, EventArgs e)
         {
             if (port != null)

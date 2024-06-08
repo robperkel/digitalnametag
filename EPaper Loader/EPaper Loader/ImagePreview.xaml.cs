@@ -21,6 +21,7 @@ public partial class ImagePreview : ContentPage
     {
 		PreviewImage.IsVisible = false;
 		ImageTable.IsVisible = false;
+        SendButton.IsVisible = false;
         try
 		{
             var result = await FilePicker.Default.PickAsync();
@@ -36,6 +37,7 @@ public partial class ImagePreview : ContentPage
 
                     PreviewImage.IsVisible = true;
                     ImageTable.IsVisible = true;
+					SendButton.IsVisible = true;
 
                 }
             }
@@ -44,5 +46,10 @@ public partial class ImagePreview : ContentPage
 		{
 			//Error or no file
 		}
+    }
+
+    private void SendButton_Clicked(object sender, EventArgs e)
+    {
+		AppShell.SendToEPaper();
     }
 }

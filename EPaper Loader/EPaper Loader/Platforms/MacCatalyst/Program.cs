@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace EPaper_Loader
+namespace EPaper_Loader.Platforms.MacCatalyst
 {
     public class Program
     {

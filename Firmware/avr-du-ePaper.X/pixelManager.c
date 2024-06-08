@@ -98,16 +98,28 @@ void PixelManager_ResetSeqPixelPointers(void)
             indexY = dispHeight - 1;
             break;
         }
+        case PORTRAIT_STANDARD:
+        {
+            indexX = 0;
+            indexY = 0;
+            break;
+        }
+        case PORTRAIT_FLIPPED:
+        {
+            indexY = dispHeight - 1;
+            indexX = dispWidth - 1;
+            break;
+        }
         default:
         {
             indexX = 0;
-            indexY = dispHeight - 1;
+            indexY = 0;
         }
     }
 }
 
 //Loads data into buffer
-void PixelManager_LoadImage(color_t clr)
+void PixelManager_LoadPixelStream(color_t clr)
 {
     PixelManager_SetPixel(indexX, indexY, clr);
     
@@ -145,6 +157,38 @@ void PixelManager_LoadImage(color_t clr)
                 indexY++;
             }
 
+            break;
+        }
+        case PORTRAIT_STANDARD:
+        {
+            if (indexX == (dispWidth - 1))
+            {
+                indexX = 0;
+                if (indexY != (dispHeight - 1))
+                {
+                    indexY++;
+                }
+            }
+            else
+            {
+                indexX++;
+            }
+            break;
+        }
+        case PORTRAIT_FLIPPED:
+        {
+            if (indexX == 0)
+            {
+                indexX = dispWidth - 1;
+                if (indexY != 0)
+                {
+                    indexY--;
+                }
+            }
+            else
+            {
+                indexX--;
+            }
             break;
         }
         default:

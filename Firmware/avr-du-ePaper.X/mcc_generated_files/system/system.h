@@ -45,6 +45,7 @@ extern "C" {
 #include "../system/clock.h"
 #include "../system/pins.h"
 #include "../usb/usb0.h"
+#include "../adc/adc0.h"
 #include "../spi/spi0.h"
 #include "../usb/usb_device.h"
 #include "../system/interrupt.h"

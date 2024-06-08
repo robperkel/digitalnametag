@@ -52,7 +52,7 @@ extern "C" {
     void PixelManager_ResetSeqPixelPointers(void);
     
     //Loads data into buffer
-    void PixelManager_LoadImage(color_t clr);
+    void PixelManager_LoadPixelStream(color_t clr);
     
     //Sets a pixel to the specified color
     void PixelManager_SetPixel(uint16_t x, uint16_t y, color_t color);

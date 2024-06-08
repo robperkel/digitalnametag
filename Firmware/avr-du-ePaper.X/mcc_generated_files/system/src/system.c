@@ -40,6 +40,7 @@ void SYSTEM_Initialize(void)
     SYSCFG_Initialize();
     PIN_MANAGER_Initialize();
     USB0_Initialize();
+    ADC0_Initialize();
     SPI0_Host_Initialize();
     USBDevice_Initialize();
     CPUINT_Initialize();

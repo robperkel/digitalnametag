@@ -13,16 +13,20 @@ def main():
 
     # TODO: User selects COM port
 
-    ser.write(b' ')
+    ser.write(b' ')    
 
-    for y in range(104):
-        for x in range(212):
+    for y in range(im.height):
+        for x in range(im.width):
             if (pixels[x, y] == (255, 0, 0)):
+                #print('R', end='')
                 ser.write(b'R')
             elif (pixels[x, y] == (255, 255, 255)):
+                #print('W', end='')
                 ser.write(b'W')
             else:
+                #print('B', end='')
                 ser.write(b'B')
+        #print(' ')
 
     ser.write(b'#')
     ser.close()

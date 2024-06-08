@@ -7,6 +7,8 @@
 #include "mcc_generated_files/timer/delay.h"
 #include "pixelManager.h"
 
+#define SCALING_FACTOR 1024
+
 //Configure the display
 void EPAPER_Initialize(void)
 {
@@ -43,7 +45,19 @@ void EPAPER_Initialize(void)
     uint8_t buffer[2] = {0xCF, 0x89};
     //NOTE: FOR OTHER PANEL SIZES, (3) maybe different
     
-    EPAPER_ExchangeRegister8(0xE5, 0x19); //0x19 = 25C
+    uint16_t adcResult = ADC0_GetConversion(ADC_MUXPOS_TEMPSENSE_gc);
+    uint16_t sigrow_offset, sigrow_slope;
+    sigrow_offset = SIGROW.TEMPSENSE1;
+    sigrow_slope = SIGROW.TEMPSENSE0;
+    
+    volatile uint32_t temp = sigrow_offset - adcResult;
+    temp *= sigrow_slope;
+    temp += 512;
+    temp /= SCALING_FACTOR;
+    
+    int16_t tempC = temp - 273;
+    
+    EPAPER_ExchangeRegister8(0xE5, tempC); //0x19 = 25C
     EPAPER_ExchangeRegister8(0xE0, 0x02);
     EPAPER_ExchangeRegister16(0x00, buffer, buffer, 2);
 }
