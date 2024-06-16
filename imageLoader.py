@@ -26,6 +26,7 @@ def main():
             else:
                 #print('B', end='')
                 ser.write(b'B')
+
         #print(' ')
 
     ser.write(b'#')

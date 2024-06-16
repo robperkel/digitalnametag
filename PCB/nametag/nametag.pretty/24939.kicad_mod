@@ -1,0 +1,115 @@
+(footprint "24939"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -13.2 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "9a64c422-0fa1-4f8f-9857-adccce24f52b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "24939"
+		(at 0 -11.7 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "931f405f-04d2-4b03-a2ab-6839fe4f9111")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" "24939"
+		(at 0 -12.7 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "f6e825da-7b3b-4132-9b2d-f993a8ecf0c1")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 -12.7 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "93d65622-8bf8-4acd-a16b-3608bda0ee33")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 -12.7 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "fcf1d02a-89cd-41f9-bfdc-bec5049b9cd1")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd board_only)
+	(fp_circle
+		(center 0 0)
+		(end 2.258 0)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "3830278c-152c-47c2-915b-9db1f52b5919")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 -10.2 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d9b67bb4-b9c5-4840-b9ce-2c9d8bb7bdd3")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole circle
+		(at 0 0)
+		(size 6.2 6.2)
+		(drill 4.2)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "a376be95-a314-4c6e-b4e4-644047ee0ea7")
+	)
+	(model "C:/Users/rober/Documents/KiCad 3D Models/Keystone/24939.STEP"
+		(offset
+			(xyz 0 0 -1.5)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -90 0 0)
+		)
+	)
+)

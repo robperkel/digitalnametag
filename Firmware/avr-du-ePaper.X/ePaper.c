@@ -6,6 +6,7 @@
 #include "mcc_generated_files/system/system.h"
 #include "mcc_generated_files/timer/delay.h"
 #include "pixelManager.h"
+#include "ePaper_SPI.h"
 
 #define SCALING_FACTOR 1024
 
@@ -33,7 +34,7 @@ void EPAPER_Initialize(void)
     DELAY_milliseconds(10);
     DISP_RESET_SetHigh();
     DELAY_milliseconds(5);
-    EPAPER_ExchangeRegister8(0x00, 0x0E);
+    EPAPER_SPI_WriteByte(0x00, 0x0E);
     DELAY_milliseconds(5);
     
     /* Set Temperature
@@ -57,27 +58,9 @@ void EPAPER_Initialize(void)
     
     int16_t tempC = temp - 273;
     
-    EPAPER_ExchangeRegister8(0xE5, tempC); //0x19 = 25C
-    EPAPER_ExchangeRegister8(0xE0, 0x02);
-    EPAPER_ExchangeRegister16(0x00, buffer, buffer, 2);
-}
-
-//Sends the register address to the display
-void EPAPER_AddressRegister(uint8_t reg)
-{
-    /* Steps to set a register:
-     * 1. DC = 0
-     * 2. CS = 0
-     * 3. Register ADDR
-     * 4. CS = 1
-     */
-
-    DC_SetLow();
-    DISP_CS_SetLow();
-    
-    SPI0_ByteExchange(reg);
-    
-    DISP_CS_SetHigh();
+    EPAPER_SPI_WriteByte(0xE5, tempC); //0x19 = 25C
+    EPAPER_SPI_WriteByte(0xE0, 0x02);
+    EPAPER_SPI_WriteBytes(0x00, buffer, 2);
 }
 
 ////Fill the display with a color
@@ -149,69 +132,6 @@ void EPAPER_LoadTestPattern(void)
 //    }
 }
 
-//Gets register [ID], writes wVal, then returns the result
-uint8_t EPAPER_ExchangeRegister8(uint8_t reg, uint8_t wVal)
-{
-    /* Steps to set a register:
-     * 1. DC = 0
-     * 2. CS = 0
-     * 3. Register ADDR
-     * 4. CS = 1
-     * 5. DC = 1
-     * 6. CS = 0
-     * 7. Send Byte
-     * 8. CS = 1
-     * 9. <Repeat 6-8 as needed>
-     */
-    
-    /*
-     * CS Setup/Hold = 60/65 ns
-     * DC Setup/Hold = 30/30 ns
-     * SCLK Frequency = 2.8 MHz Max
-     */
-    
-    EPAPER_AddressRegister(reg);
-    DC_SetHigh();
-    DISP_CS_SetLow();
-    
-    uint8_t result = SPI0_ByteExchange(wVal);
-    
-    DISP_CS_SetHigh();
-    
-    return result;
-}
-
-//Writes wVals to [reg] then returns the results
-void EPAPER_ExchangeRegister16(uint8_t reg, uint8_t* wVal, uint8_t* rVal, uint8_t len)
-{
-    /* Steps to set a register:
-     * 1. DC = 0
-     * 2. CS = 0
-     * 3. Register ADDR
-     * 4. CS = 1
-     * 5. DC = 1
-     * 6. CS = 0
-     * 7. Send Byte
-     * 8. CS = 1
-     * 9. <Repeat 6-8 as needed>
-     */
-    
-    /*
-     * CS Setup/Hold = 60/65 ns
-     * DC Setup/Hold = 30/30 ns
-     * SCLK Frequency = 2.8 MHz Max
-     */
-    
-    EPAPER_AddressRegister(reg);
-    DC_SetHigh();
-    
-    for (uint8_t i = 0; i < len; i++)
-    {
-        DISP_CS_SetLow();
-        rVal[i] = SPI0_ByteExchange(wVal[i]);
-        DISP_CS_SetHigh();
-    }
-}
 
 //Load the display
 void EPAPER_UpdateDisplay(void)
@@ -244,7 +164,7 @@ void EPAPER_UpdateDisplay(void)
     
     //B/W Phase
     
-    EPAPER_AddressRegister(0x10);
+    EPAPER_SPI_AddressRegister(0x10);
     DC_SetHigh();
 
     uint16_t dispX, dispY;
@@ -263,7 +183,7 @@ void EPAPER_UpdateDisplay(void)
     
     //Red Phase
     
-    EPAPER_AddressRegister(0x13);
+    EPAPER_SPI_AddressRegister(0x13);
     DC_SetHigh();
 
     for (uint16_t y = 0; y < dispY; y++)
@@ -285,9 +205,9 @@ void EPAPER_UpdateDisplay(void)
      */
     
     while (!BUSY_GetValue());
-    EPAPER_AddressRegister(0x04);
+    EPAPER_SPI_AddressRegister(0x04);
     while (!BUSY_GetValue());
-    EPAPER_AddressRegister(0x12);
+    EPAPER_SPI_AddressRegister(0x12);
     while (!BUSY_GetValue());
     
     /* Power Down DC-DC
@@ -303,7 +223,7 @@ void EPAPER_UpdateDisplay(void)
      * 10. Set BUSY to INPUT
      */
     
-    EPAPER_AddressRegister(0x02);
+    EPAPER_SPI_AddressRegister(0x02);
     while (!BUSY_GetValue());
     
     //Cutoff power

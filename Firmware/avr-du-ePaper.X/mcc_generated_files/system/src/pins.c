@@ -55,7 +55,7 @@ static void (*LED_USB_InterruptHandler)(void);
 static void (*LED_MEM_InterruptHandler)(void);
 static void (*LED_DISP_InterruptHandler)(void);
 static void (*IO_PF3_InterruptHandler)(void);
-static void (*DISP_MISO_EN_InterruptHandler)(void);
+static void (*DISP_MOSI_EN_InterruptHandler)(void);
 static void (*IO_PF5_InterruptHandler)(void);
 static void (*SW0_InterruptHandler)(void);
 static void (*IO_PF7_InterruptHandler)(void);
@@ -140,7 +140,7 @@ void PIN_MANAGER_Initialize()
     LED_MEM_SetInterruptHandler(LED_MEM_DefaultInterruptHandler);
     LED_DISP_SetInterruptHandler(LED_DISP_DefaultInterruptHandler);
     IO_PF3_SetInterruptHandler(IO_PF3_DefaultInterruptHandler);
-    DISP_MISO_EN_SetInterruptHandler(DISP_MISO_EN_DefaultInterruptHandler);
+    DISP_MOSI_EN_SetInterruptHandler(DISP_MOSI_EN_DefaultInterruptHandler);
     IO_PF5_SetInterruptHandler(IO_PF5_DefaultInterruptHandler);
     SW0_SetInterruptHandler(SW0_DefaultInterruptHandler);
     IO_PF7_SetInterruptHandler(IO_PF7_DefaultInterruptHandler);
@@ -420,17 +420,17 @@ void IO_PF3_DefaultInterruptHandler(void)
     // or set custom function using IO_PF3_SetInterruptHandler()
 }
 /**
-  Allows selecting an interrupt handler for DISP_MISO_EN at application runtime
+  Allows selecting an interrupt handler for DISP_MOSI_EN at application runtime
 */
-void DISP_MISO_EN_SetInterruptHandler(void (* interruptHandler)(void)) 
+void DISP_MOSI_EN_SetInterruptHandler(void (* interruptHandler)(void)) 
 {
-    DISP_MISO_EN_InterruptHandler = interruptHandler;
+    DISP_MOSI_EN_InterruptHandler = interruptHandler;
 }
 
-void DISP_MISO_EN_DefaultInterruptHandler(void)
+void DISP_MOSI_EN_DefaultInterruptHandler(void)
 {
-    // add your DISP_MISO_EN interrupt custom code
-    // or set custom function using DISP_MISO_EN_SetInterruptHandler()
+    // add your DISP_MOSI_EN interrupt custom code
+    // or set custom function using DISP_MOSI_EN_SetInterruptHandler()
 }
 /**
   Allows selecting an interrupt handler for IO_PF5 at application runtime
@@ -581,7 +581,7 @@ ISR(PORTF_PORT_vect)
     }
     if(VPORTF.INTFLAGS & PORT_INT4_bm)
     {
-       DISP_MISO_EN_InterruptHandler(); 
+       DISP_MOSI_EN_InterruptHandler(); 
     }
     if(VPORTF.INTFLAGS & PORT_INT5_bm)
     {

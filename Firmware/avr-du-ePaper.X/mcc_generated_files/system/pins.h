@@ -437,24 +437,24 @@
 #define IO_PF3_EnableInterruptForLowLevelSensing() do { PORTF.PIN3CTRL = (PORTF.PIN3CTRL & ~PORT_ISC_gm) | 0x5 ; } while(0)
 #define PF3_SetInterruptHandler IO_PF3_SetInterruptHandler
 
-//get/set DISP_MISO_EN aliases
-#define DISP_MISO_EN_SetHigh() do { PORTF_OUTSET = 0x10; } while(0)
-#define DISP_MISO_EN_SetLow() do { PORTF_OUTCLR = 0x10; } while(0)
-#define DISP_MISO_EN_Toggle() do { PORTF_OUTTGL = 0x10; } while(0)
-#define DISP_MISO_EN_GetValue() (VPORTF.IN & (0x1 << 4))
-#define DISP_MISO_EN_SetDigitalInput() do { PORTF_DIRCLR = 0x10; } while(0)
-#define DISP_MISO_EN_SetDigitalOutput() do { PORTF_DIRSET = 0x10; } while(0)
-#define DISP_MISO_EN_SetPullUp() do { PORTF_PIN4CTRL  |= PORT_PULLUPEN_bm; } while(0)
-#define DISP_MISO_EN_ResetPullUp() do { PORTF_PIN4CTRL  &= ~PORT_PULLUPEN_bm; } while(0)
-#define DISP_MISO_EN_SetInverted() do { PORTF_PIN4CTRL  |= PORT_INVEN_bm; } while(0)
-#define DISP_MISO_EN_ResetInverted() do { PORTF_PIN4CTRL  &= ~PORT_INVEN_bm; } while(0)
-#define DISP_MISO_EN_DisableInterruptOnChange() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x0 ; } while(0)
-#define DISP_MISO_EN_EnableInterruptForBothEdges() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x1 ; } while(0)
-#define DISP_MISO_EN_EnableInterruptForRisingEdge() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x2 ; } while(0)
-#define DISP_MISO_EN_EnableInterruptForFallingEdge() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x3 ; } while(0)
-#define DISP_MISO_EN_DisableDigitalInputBuffer() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x4 ; } while(0)
-#define DISP_MISO_EN_EnableInterruptForLowLevelSensing() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x5 ; } while(0)
-#define PF4_SetInterruptHandler DISP_MISO_EN_SetInterruptHandler
+//get/set DISP_MOSI_EN aliases
+#define DISP_MOSI_EN_SetHigh() do { PORTF_OUTSET = 0x10; } while(0)
+#define DISP_MOSI_EN_SetLow() do { PORTF_OUTCLR = 0x10; } while(0)
+#define DISP_MOSI_EN_Toggle() do { PORTF_OUTTGL = 0x10; } while(0)
+#define DISP_MOSI_EN_GetValue() (VPORTF.IN & (0x1 << 4))
+#define DISP_MOSI_EN_SetDigitalInput() do { PORTF_DIRCLR = 0x10; } while(0)
+#define DISP_MOSI_EN_SetDigitalOutput() do { PORTF_DIRSET = 0x10; } while(0)
+#define DISP_MOSI_EN_SetPullUp() do { PORTF_PIN4CTRL  |= PORT_PULLUPEN_bm; } while(0)
+#define DISP_MOSI_EN_ResetPullUp() do { PORTF_PIN4CTRL  &= ~PORT_PULLUPEN_bm; } while(0)
+#define DISP_MOSI_EN_SetInverted() do { PORTF_PIN4CTRL  |= PORT_INVEN_bm; } while(0)
+#define DISP_MOSI_EN_ResetInverted() do { PORTF_PIN4CTRL  &= ~PORT_INVEN_bm; } while(0)
+#define DISP_MOSI_EN_DisableInterruptOnChange() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x0 ; } while(0)
+#define DISP_MOSI_EN_EnableInterruptForBothEdges() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x1 ; } while(0)
+#define DISP_MOSI_EN_EnableInterruptForRisingEdge() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x2 ; } while(0)
+#define DISP_MOSI_EN_EnableInterruptForFallingEdge() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x3 ; } while(0)
+#define DISP_MOSI_EN_DisableDigitalInputBuffer() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x4 ; } while(0)
+#define DISP_MOSI_EN_EnableInterruptForLowLevelSensing() do { PORTF.PIN4CTRL = (PORTF.PIN4CTRL & ~PORT_ISC_gm) | 0x5 ; } while(0)
+#define PF4_SetInterruptHandler DISP_MOSI_EN_SetInterruptHandler
 
 //get/set IO_PF5 aliases
 #define IO_PF5_SetHigh() do { PORTF_OUTSET = 0x20; } while(0)
@@ -964,24 +964,24 @@ void IO_PF3_SetInterruptHandler(void (* interruptHandler)(void)) ;
 
 /**
  * @ingroup  pinsdriver
- * @brief Default Interrupt Handler for DISP_MISO_EN pin. 
- *        This is a predefined interrupt handler to be used together with the DISP_MISO_EN_SetInterruptHandler() method.
- *        This handler is called every time the DISP_MISO_EN ISR is executed. 
+ * @brief Default Interrupt Handler for DISP_MOSI_EN pin. 
+ *        This is a predefined interrupt handler to be used together with the DISP_MOSI_EN_SetInterruptHandler() method.
+ *        This handler is called every time the DISP_MOSI_EN ISR is executed. 
  * @pre PIN_MANAGER_Initialize() has been called at least once
  * @param none
  * @return none
  */
-void DISP_MISO_EN_DefaultInterruptHandler(void);
+void DISP_MOSI_EN_DefaultInterruptHandler(void);
 
 /**
  * @ingroup  pinsdriver
- * @brief Interrupt Handler Setter for DISP_MISO_EN pin input-sense-config functionality.
- *        Allows selecting an interrupt handler for DISP_MISO_EN at application runtime
+ * @brief Interrupt Handler Setter for DISP_MOSI_EN pin input-sense-config functionality.
+ *        Allows selecting an interrupt handler for DISP_MOSI_EN at application runtime
  * @pre PIN_MANAGER_Initialize() has been called at least once
  * @param InterruptHandler function pointer.
  * @return none
  */
-void DISP_MISO_EN_SetInterruptHandler(void (* interruptHandler)(void)) ; 
+void DISP_MOSI_EN_SetInterruptHandler(void (* interruptHandler)(void)) ; 
 
 /**
  * @ingroup  pinsdriver

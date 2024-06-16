@@ -83,6 +83,7 @@
       <itemPath>pixelManager.h</itemPath>
       <itemPath>ePaper.h</itemPath>
       <itemPath>textQueue.h</itemPath>
+      <itemPath>ePaper_SPI.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -166,6 +167,7 @@
       <itemPath>Application.c</itemPath>
       <itemPath>pixelManager.c</itemPath>
       <itemPath>textQueue.c</itemPath>
+      <itemPath>ePaper_SPI.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
