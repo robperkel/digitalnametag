@@ -1,4 +1,4 @@
-#include "ePaper.h"
+#include "ePaper_3CLR.h"
 
 #include <stdint.h>
 #include <stdbool.h>

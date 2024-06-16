@@ -81,6 +81,13 @@ uint8_t PixelManager_GetRByte(uint16_t x, uint16_t y)
     return pixels[rIndex];
 }
 
+uint8_t PixelManager_GetBWRYByte(uint16_t x, uint16_t y)
+{
+    uint16_t index;
+    index = (y * (dispWidth >> 2)) + (x);
+    return pixels[index];
+}
+
 //Starts a new image stream
 void PixelManager_ResetSeqPixelPointers(void)
 {
@@ -216,34 +223,109 @@ void PixelManager_SetPixel(uint16_t x, uint16_t y, color_t color)
     uint8_t bIndex = x >> 3;
     uint8_t mask = 0b1 << (7 - (x & 0b111));
     
-    //Compute memory addresses
-    uint16_t bwIndex, rIndex;
-    bwIndex = (y * (dispWidth >> 3)) + bIndex;
-    rIndex = bwIndex + ((dispWidth >> 3) * dispHeight);
-    
-    if (color == WHITE)
+    //Check display mode
+    if (colorMode == BW)
     {
-        //White
-        //Bits should be cleared
-        pixels[bwIndex] &= ~mask;
-        pixels[rIndex] &= ~mask;
+        //Compute memory addresses
+        uint16_t bwIndex;
+        bwIndex = (y * (dispWidth >> 3)) + bIndex;
+
+        if (color == WHITE)
+        {
+            //White
+            //Bits should be cleared
+            pixels[bwIndex] &= ~mask;
+        }
+        else if (color == BLACK)
+        {
+            //Black
+            pixels[bwIndex] |= mask;
+        }
+        else if (color == RED)
+        {
+            //Red (INVALID!)
+            //Map to Black
+            
+            pixels[bwIndex] |= mask;
+        }
+        else if (color == YELLOW)
+        {
+            //Yellow (INVALID!)
+            //Map to White
+
+            pixels[bwIndex] &= ~mask;
+        }
     }
-    else if (color == BLACK)
+    else if (colorMode == BWR)
     {
-        //Black
-        pixels[bwIndex] |= mask;
-        pixels[rIndex] &= ~mask;
+        //Compute memory addresses
+        uint16_t bwIndex, rIndex;
+        bwIndex = (y * (dispWidth >> 3)) + bIndex;
+        rIndex = bwIndex + ((dispWidth >> 3) * dispHeight);
+
+        if (color == WHITE)
+        {
+            //White
+            //Bits should be cleared
+            pixels[bwIndex] &= ~mask;
+            pixels[rIndex] &= ~mask;
+        }
+        else if (color == BLACK)
+        {
+            //Black
+            pixels[bwIndex] |= mask;
+            pixels[rIndex] &= ~mask;
+        }
+        else if (color == RED)
+        {
+            //Red
+            pixels[bwIndex] &= ~mask;
+            pixels[rIndex] |= mask;
+        }
+        else if (color == YELLOW)
+        {
+            //Yellow (INVALID!)
+            //Map to White
+
+            pixels[bwIndex] &= ~mask;
+            pixels[rIndex] &= ~mask;
+        }
     }
-    else if (color == RED)
+    else if (colorMode == BWRY)
     {
-        //Red
-        pixels[bwIndex] &= ~mask;
-        pixels[rIndex] |= mask;
-    }
-    else if (color == YELLOW)
-    {
-        //Yellow
+        //BWRY
+        bIndex = x >> 2;
         
-        //TODO
+        //00112233 <- Pixel Order
+        uint8_t shift = ((3 - (x & 0b11)) << 1);
+        mask = ~(0xFF << shift);
+        
+        //Compute memory addresses
+        uint16_t pixelIndex;
+        pixelIndex = (y * (dispWidth >> 2)) + bIndex;
+
+        if (color == WHITE)
+        {
+            //White (0b01)
+            pixels[pixelIndex] &= mask;
+            pixels[pixelIndex] |= (0b01 << shift);
+        }
+        else if (color == BLACK)
+        {
+            //Black (0b00)
+            pixels[pixelIndex] &= mask;
+        }
+        else if (color == RED)
+        {
+            //Red (0b11)
+            pixels[pixelIndex] &= mask;
+            pixels[pixelIndex] |= (0b11 << shift);
+        }
+        else if (color == YELLOW)
+        {
+            //Yellow (0b10)
+            pixels[pixelIndex] &= ~mask;
+            pixels[pixelIndex] |= (0b10 << shift);
+        }
     }
 }

@@ -5,27 +5,25 @@
 extern "C" {
 #endif
     
+//2.13" EPAPER Pixel Counts
+#define EPAPER_2_13_X 212
+#define EPAPER_2_13_Y 104
+    
 #include <stdint.h>
 #include <stdbool.h>
     
-#include "pixelManager.h"
-    
-//API Built for E2213JS0C1
-//Other displays may be compatiable
-//https://www.pervasivedisplays.com/product/2-13-e-ink-displays/
-    
-    //Configure the display
+    //Initializes the EPAPER Display
     void EPAPER_Initialize(void);
     
-    //Load a test pattern
-    void EPAPER_LoadTestPattern(void);
-        
-    //Load the display
+    //Updates the display
     void EPAPER_UpdateDisplay(void);
+    
+    //Returns the temp of the MCU
+    int8_t EPAPER_GetTemperature(void);
 
 #ifdef	__cplusplus
 }
 #endif
 
-#endif	/* EPAPER_H */
+#endif	/* EPAPER_COMMON_H */
 

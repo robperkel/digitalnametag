@@ -47,6 +47,7 @@ extern "C" {
     //Get data byte for image loading
     uint8_t PixelManager_GetBWByte(uint16_t x, uint16_t y);
     uint8_t PixelManager_GetRByte(uint16_t x, uint16_t y);
+    uint8_t PixelManager_GetBWRYByte(uint16_t x, uint16_t y);
     
     //Starts a new image stream
     void PixelManager_ResetSeqPixelPointers(void);

@@ -31,7 +31,7 @@
     THIS SOFTWARE.
 */
 #include "mcc_generated_files/system/system.h"
-#include "ePaper.h"
+#include "ePaper_3CLR.h"
 #include "mcc_generated_files/timer/delay.h"
 #include "usb_cdc_virtual_serial_port.h"
 #include "ringBuffer.h"

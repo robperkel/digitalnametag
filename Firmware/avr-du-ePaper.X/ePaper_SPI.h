@@ -8,7 +8,6 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
     
-    
     //Reads LEN bytes from the ePaper
     void EPAPER_SPI_ReadBytes(uint8_t reg, uint8_t* data, uint16_t len);
     
