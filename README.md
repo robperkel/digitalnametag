@@ -14,13 +14,12 @@ This projects creates a simple re-programmable E-Paper Nametag with the AVR64DU3
 
 - Hardware Design (Schematic and PCB files) are licensed under CERN OHL v2
     - https://choosealicense.com/licenses/cern-ohl-s-2.0/
+- 3D models for parts in the PCB are not included due to licensing restrictions. 
 
-## Software Setup
-
-### Python Libraries Required (Not Included)
+## Python Libraries Required (Not Included)
 
 - [Python Image Library (Pillow)](https://pypi.org/project/pillow/)
-    - This library opens an image and reads the pixel values.
+    - This library opens the image and reads the pixel values.
 - [pySerial](https://pypi.org/project/pyserial/)
     - This library allows the script to send data over a COM port.
 
