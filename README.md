@@ -31,3 +31,11 @@ This projects creates a simple re-programmable E-Paper Nametag with the AVR64DU3
         - Red = 0xFF0000 [255, 0, 0]
         - Black = 0x000000 [0, 0, 0]
         - White = 0xFFFFFF [255, 255, 255]
+
+A test image is provided in the Images folder.
+
+## Programming Connector
+
+This board is designed to use a 6 position Tag-Connect header (such as a [TC2030-ICESPI](https://www.tag-connect.com/product/tc2030-icespi-legged-cable-for-use-with-atmel-ice)) for programming. 
+
+It should be possible to carefully solder wires to the same programming pads to program without this connector, although this may prevent the use of a Tag-Connect header in the future due to the uneven surface created.
