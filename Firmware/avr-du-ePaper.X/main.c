@@ -61,6 +61,7 @@ int main(void)
         LED_USB_SetHigh();
     }
         
+    //Enable Interrupts
     sei();
         
     uint8_t data = 0x00;
