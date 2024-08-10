@@ -9,8 +9,9 @@
 	(paper "A4")
 	(title_block
 		(title "EPaper Nametag")
-		(date "2024-06-09")
-		(rev "A2")
+		(date "2024-08-09")
+		(rev "A3")
+		(company "Created by Robert Perkel")
 	)
 	(layers
 		(0 "F.Cu" signal)
@@ -9529,7 +9530,7 @@
 			(justify left bottom)
 		)
 	)
-	(gr_text "(C) Robert Perkel 2024"
+	(gr_text "Created by Robert Perkel"
 		(at 228.1 103.7 90)
 		(layer "F.SilkS")
 		(uuid "a6753879-e683-48da-a54f-2bd5ea342d68")
